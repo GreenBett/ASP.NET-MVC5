@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4cf0f0369cde468aa46a5a2bd41f033a" Name="Diagram1">
+        <EntityTypeShape EntityType="restaurant_projectModel.Commandes" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="restaurant_projectModel.Plats" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="restaurant_projectModel.Serveur" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="restaurant_projectModel.Tables" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="restaurant_projectModel.TotalCommandes" Width="1.5" PointX="8.25" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="restaurant_projectModel.fk2" ManuallyRouted="false" />
+        <AssociationConnector Association="restaurant_projectModel.fk3" ManuallyRouted="false" />
+        <AssociationConnector Association="restaurant_projectModel.FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="restaurant_projectModel.fk5" ManuallyRouted="false" />
+        <AssociationConnector Association="restaurant_projectModel.fk4" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

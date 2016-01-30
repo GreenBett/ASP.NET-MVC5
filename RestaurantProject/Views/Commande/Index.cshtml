@@ -1,0 +1,139 @@
+﻿@model IEnumerable<RestaurantProject.Commandes>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+<head>
+    <link href="~/Content/StyleSheet1.css" rel='stylesheet' type='text/css' />
+</head>
+<body background="~/Content/Images/restau.jpg">
+    <h2 id="create">Your order tracking</h2>
+
+    <section>
+
+        
+
+        <br /><br />
+
+
+        <p>
+            @Html.ActionLink("Create New Commande", "Create")
+        </p>
+
+        <table class="table" align="center">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.QTT)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.etat_plat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.etat_comm)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Plats.Name)
+                </th>
+                <th></th>
+            </tr>
+            @{
+                int nbr_total_commande = 0, nbr_commande_servi = 0, nbr_commande_encours = 0;
+            }
+            @foreach (var item in Model)
+            {
+                // if (@i.Serveur.ToString().Equals(@Session["LogedUserName"].ToString()))
+                int? i = item.Id_table; String I = i.ToString();
+                // if (I.Equals(@Session["Num_table"].ToString()))
+                if (i.Equals(@Session["Num_table"]))
+                {
+                    if (item.etat_plat.Equals("servie")) { nbr_commande_servi++; }
+
+
+                    else if (item.etat_plat.Equals("encours"))
+                    {
+                        nbr_commande_encours++;
+                    }
+                    nbr_total_commande++;
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QTT)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.etat_plat)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.etat_comm)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Plats.Name)
+                        </td>
+                        <td>
+                            @if (item.etat_comm.ToString().Equals("encours"))
+                            {
+                                @Html.ActionLink("Increase quantity ", "Increase", new { id = item.id_commande })
+                            }
+                            @if (item.etat_comm.ToString().Equals("nouvelle"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.id_commande })
+                            }
+                            @if (item.etat_comm.ToString().Equals("nouvelle"))
+                            {
+                                @Html.ActionLink("Delete", "Delete", new { id = item.id_commande })
+                            }
+
+                            @Html.ActionLink("Details", "Details", new { id = item.id_commande })
+
+                        </td>
+                    </tr>
+
+
+                }
+
+            }
+        </table>
+        <p>
+            @{
+                //Affichage de lien pour payement
+                if (nbr_total_commande == nbr_commande_servi || nbr_commande_encours != 0)
+                {
+                    @Html.ActionLink("Payer votre commande", "PayerCommande")
+                }
+            }
+
+            @{
+                if (nbr_total_commande == nbr_commande_servi)
+                {
+                    //Update etat_commande from --- to servie
+                    using (restaurant_projectEntities db = new restaurant_projectEntities())
+                    {
+                        int? id_tab = (int?)Session["Num_table"];
+                        Tables table = db.Tables.Find(id_tab);
+                        table.Etat_commande = "servie";
+                        db.Entry(table).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+                    ///////////////////////////////////////
+
+                }
+                else
+                {
+                    //Update etat_commande from  servie to encours
+                    using (restaurant_projectEntities db = new restaurant_projectEntities())
+                    {
+                        int? id_tab = (int?)Session["Num_table"];
+                        Tables table = db.Tables.Find(id_tab);
+                        table.Etat_commande = "encours";
+                        db.Entry(table).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    ///////////////////////////////////////
+                }
+
+            }
+        </p>
+    </section>
+</body>
+</html>

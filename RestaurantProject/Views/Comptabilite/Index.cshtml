@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<html>
+<head>
+    <link href="~/Content/StyleSheet1.css" rel='stylesheet' type='text/css' />
+</head>
+<body background="~/Content/Images/restau.jpg">
+    <h2 id="create">Accounting</h2>
+
+    <section>
+
+        @{
+            //Declaration des variables
+            int nbr_de_table = 0, nbr_serveur = 0;
+            int?[] nbr_commande_par_table; float?[] gain_par_table;
+            int?[] nbr_commande_par_serveur; float?[] gain_par_serveur;
+        }
+
+        @{
+            using (restaurant_projectEntities dc = new restaurant_projectEntities())
+            {
+                //Recperation de nbr de table dans le restaurant
+                var v = dc.Tables.AsEnumerable();
+                if (v != null)
+                {
+                    foreach (var i in v)
+                    {
+                        nbr_de_table++;
+                    }
+                }
+                //Recperation de nbr de serveur dans le restaurant
+                var v1 = dc.Serveur.AsEnumerable();
+                if (v1 != null)
+                {
+                    foreach (var i in v1)
+                    {
+                        nbr_serveur++;
+                    }
+                }
+                //Declaration des tableau pour recuperation de la comptabilité du jours
+                nbr_commande_par_table = new int?[nbr_de_table]; gain_par_table = new float?[nbr_de_table];
+                nbr_commande_par_serveur = new int?[nbr_serveur]; gain_par_serveur = new float?[nbr_serveur];
+
+
+                //Gain par table
+                for (int i = 0; i < nbr_commande_par_table.Length; i++)
+                {
+                    int? nbr_commande;
+                    float? gain = 0;
+                    nbr_commande = 0;
+                    var v3 = dc.TotalCommandes.AsEnumerable();
+                    if (v3 != null)
+                    {
+                        foreach (var j in v3)
+                        {
+                            if (j.Num_table == i + 1)
+                            {
+                                nbr_commande++;
+                                gain += (float?)j.Prix;
+                            }
+                        }
+                    }
+                    //Remplissage des tableaux nbr_commande_par_table et gain_par_table
+                    nbr_commande_par_table[i] = nbr_commande;
+                    gain_par_table[i] = gain;
+                }
+
+                //Gain par serveur
+
+                for (int i = 0; i < nbr_commande_par_serveur.Length; i++)
+                {
+                    int? nbr_comm;
+                    float? gain_serveur = 0;
+                    nbr_comm = 0;
+                    var v4 = dc.TotalCommandes.AsEnumerable();
+                    if (v4 != null)
+                    {
+                        foreach (var j in v4)
+                        {
+                            if (j.id_serveur == i + 1)
+                            {
+                                nbr_comm++;
+                                gain_serveur += (float?)j.gain_serveur;
+                            }
+                        }
+                    }
+                    //Remplissage des tableaux nbr_commande_par_serveur et gain_par_serveur
+                    nbr_commande_par_serveur[i] = nbr_comm;
+                    gain_par_serveur[i] = gain_serveur;
+                }
+            }
+        }
+        <table align="center">
+            <tr id="t">
+                <td>Id table</td>
+                <td>Number of orders per table</td>
+                <td>Gain</td>
+            </tr>
+            @{//Affichage gain par table
+                for (int i = 0; i < nbr_commande_par_table.Length; i++)
+                {
+                    int j = i + 1;
+                    <tr>
+                        <td align="center">@j</td>
+                        <td align="center">@nbr_commande_par_table[i]</td>
+                        <td>@gain_par_table[i] DH</td>
+
+                    </tr>
+                }
+            }
+        </table>
+        <br /><br />
+        <table align="center">
+            <tr id="t">
+                <td>Id waiter</td>
+                <td>Number of orders per waiter</td>
+                <td>Gain</td>
+            </tr>
+            @{//Affichage gain par table
+                for (int i = 0; i < nbr_commande_par_serveur.Length; i++)
+                {
+                    int j = i + 1;
+                    <tr>
+                        <td align="center">@j</td>
+                        <td>@nbr_commande_par_serveur[i]</td>
+                        <td align="center">@gain_par_serveur[i] DH</td>
+                    </tr>
+                }
+            }
+        </table>
+
+
+       
+    </section>
+</body>
+</html>

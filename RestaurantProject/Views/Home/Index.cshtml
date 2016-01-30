@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<html>
+<head>
+    <link href="~/Content/StyleSheet1.css" rel='stylesheet' type='text/css' />
+</head>
+<body background="~/Content/Images/restau.jpg">
+    <h2 id="create">Welcome click on your profile</h2>
+
+    <section>
+
+        <h1 id="creat"> @Html.ActionLink("Customer", "Login", "Commande")</h1>
+        <h1 id="creat">
+            @Html.ActionLink("Waiter", "LoginServeur", "ServeurTable")<br />
+        </h1>
+        <h1 id="creat">
+            @Html.ActionLink("Cook", "Index", "Cuisinier")<br />
+        </h1>
+        <h1 id="creat"> @Html.ActionLink("Accounting", "Index", "Comptabilite")</h1><br />
+</section>
+</body>
+</html>

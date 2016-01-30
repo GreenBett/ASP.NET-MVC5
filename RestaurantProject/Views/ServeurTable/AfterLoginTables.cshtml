@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "AfterLoginTables";
+}
+
+
+
+<html>
+<head>
+    <link href="~/Content/StyleSheet1.css" rel='stylesheet' type='text/css' />
+</head>
+<body background="~/Content/Images/restau.jpg">
+    <h2 id="create">Tables</h2>
+
+    <section>
+        <table align="center">
+            <tr id="t">
+                <td>Table</td>
+                <td>Etat de la table</td>
+                <td>Etat de la commande</td>
+            </tr>
+
+            @{
+
+
+
+                using (restaurant_projectEntities dc = new restaurant_projectEntities())
+                {
+
+
+                    var v = dc.Tables.AsEnumerable();
+                    if (v != null)
+                    {
+                        foreach (var i in v)
+                        {
+                            if (@i.id_serveur.ToString().Equals(@Session["LogedUserID"].ToString()))
+                            {
+                                <tr>
+                                    <td align="center">@i.Id_table.ToString()</td>
+                                    <td align="center">@i.Etat_table.ToString()</td>
+                                    <td align="center">@i.Etat_commande.ToString()</td>
+
+                                </tr>
+                            }
+
+
+                        }
+                    }
+                }
+
+            }
+        </table>
+    </section>
+</body>
+</html>

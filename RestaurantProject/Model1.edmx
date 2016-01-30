@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="restaurant_projectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Commandes">
+          <Key>
+            <PropertyRef Name="id_commande" />
+          </Key>
+          <Property Name="id_commande" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Idplat" Type="int" />
+          <Property Name="QTT" Type="int" />
+          <Property Name="etat_plat" Type="nvarchar" MaxLength="100" />
+          <Property Name="etat_comm" Type="nvarchar" MaxLength="100" />
+          <Property Name="Id_table" Type="int" />
+        </EntityType>
+        <EntityType Name="Plats">
+          <Key>
+            <PropertyRef Name="Idplat" />
+          </Key>
+          <Property Name="Idplat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsSelected" Type="bit" Nullable="false" />
+          <Property Name="Prix" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Serveur">
+          <Key>
+            <PropertyRef Name="id_serveur" />
+          </Key>
+          <Property Name="id_serveur" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tables">
+          <Key>
+            <PropertyRef Name="Id_table" />
+          </Key>
+          <Property Name="Id_table" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Etat_table" Type="nvarchar" MaxLength="100" />
+          <Property Name="Etat_commande" Type="nvarchar" MaxLength="100" />
+          <Property Name="id_serveur" Type="int" />
+        </EntityType>
+        <EntityType Name="TotalCommandes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Num_commande" Type="int" />
+          <Property Name="Jours" Type="date" />
+          <Property Name="Num_table" Type="int" />
+          <Property Name="Prix" Type="money" />
+          <Property Name="id_serveur" Type="int" />
+          <Property Name="gain_serveur" Type="money" />
+        </EntityType>
+        <Association Name="FK1">
+          <End Role="Serveur" Type="Self.Serveur" Multiplicity="0..1" />
+          <End Role="Tables" Type="Self.Tables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serveur">
+              <PropertyRef Name="id_serveur" />
+            </Principal>
+            <Dependent Role="Tables">
+              <PropertyRef Name="id_serveur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk2">
+          <End Role="Plats" Type="Self.Plats" Multiplicity="0..1" />
+          <End Role="Commandes" Type="Self.Commandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plats">
+              <PropertyRef Name="Idplat" />
+            </Principal>
+            <Dependent Role="Commandes">
+              <PropertyRef Name="Idplat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk3">
+          <End Role="Tables" Type="Self.Tables" Multiplicity="0..1" />
+          <End Role="Commandes" Type="Self.Commandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tables">
+              <PropertyRef Name="Id_table" />
+            </Principal>
+            <Dependent Role="Commandes">
+              <PropertyRef Name="Id_table" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk4">
+          <End Role="Tables" Type="Self.Tables" Multiplicity="0..1" />
+          <End Role="TotalCommandes" Type="Self.TotalCommandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tables">
+              <PropertyRef Name="Id_table" />
+            </Principal>
+            <Dependent Role="TotalCommandes">
+              <PropertyRef Name="Num_table" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk5">
+          <End Role="Serveur" Type="Self.Serveur" Multiplicity="0..1" />
+          <End Role="TotalCommandes" Type="Self.TotalCommandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serveur">
+              <PropertyRef Name="id_serveur" />
+            </Principal>
+            <Dependent Role="TotalCommandes">
+              <PropertyRef Name="id_serveur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="restaurant_projectModelStoreContainer">
+          <EntitySet Name="Commandes" EntityType="Self.Commandes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Plats" EntityType="Self.Plats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Serveur" EntityType="Self.Serveur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tables" EntityType="Self.Tables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TotalCommandes" EntityType="Self.TotalCommandes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK1" Association="Self.FK1">
+            <End Role="Serveur" EntitySet="Serveur" />
+            <End Role="Tables" EntitySet="Tables" />
+          </AssociationSet>
+          <AssociationSet Name="fk2" Association="Self.fk2">
+            <End Role="Plats" EntitySet="Plats" />
+            <End Role="Commandes" EntitySet="Commandes" />
+          </AssociationSet>
+          <AssociationSet Name="fk3" Association="Self.fk3">
+            <End Role="Tables" EntitySet="Tables" />
+            <End Role="Commandes" EntitySet="Commandes" />
+          </AssociationSet>
+          <AssociationSet Name="fk4" Association="Self.fk4">
+            <End Role="Tables" EntitySet="Tables" />
+            <End Role="TotalCommandes" EntitySet="TotalCommandes" />
+          </AssociationSet>
+          <AssociationSet Name="fk5" Association="Self.fk5">
+            <End Role="Serveur" EntitySet="Serveur" />
+            <End Role="TotalCommandes" EntitySet="TotalCommandes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="restaurant_projectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Commandes">
+          <Key>
+            <PropertyRef Name="id_commande" />
+          </Key>
+          <Property Name="id_commande" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Idplat" Type="Int32" />
+          <Property Name="QTT" Type="Int32" />
+          <Property Name="etat_plat" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="etat_comm" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Id_table" Type="Int32" />
+          <NavigationProperty Name="Plats" Relationship="Self.fk2" FromRole="Commandes" ToRole="Plats" />
+          <NavigationProperty Name="Tables" Relationship="Self.fk3" FromRole="Commandes" ToRole="Tables" />
+        </EntityType>
+        <EntityType Name="Plats">
+          <Key>
+            <PropertyRef Name="Idplat" />
+          </Key>
+          <Property Name="Idplat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsSelected" Type="Boolean" Nullable="false" />
+          <Property Name="Prix" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Commandes" Relationship="Self.fk2" FromRole="Plats" ToRole="Commandes" />
+        </EntityType>
+        <EntityType Name="Serveur">
+          <Key>
+            <PropertyRef Name="id_serveur" />
+          </Key>
+          <Property Name="id_serveur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tables" Relationship="Self.FK1" FromRole="Serveur" ToRole="Tables" />
+          <NavigationProperty Name="TotalCommandes" Relationship="Self.fk5" FromRole="Serveur" ToRole="TotalCommandes" />
+        </EntityType>
+        <EntityType Name="Tables">
+          <Key>
+            <PropertyRef Name="Id_table" />
+          </Key>
+          <Property Name="Id_table" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Etat_table" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Etat_commande" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_serveur" Type="Int32" />
+          <NavigationProperty Name="Commandes" Relationship="Self.fk3" FromRole="Tables" ToRole="Commandes" />
+          <NavigationProperty Name="Serveur" Relationship="Self.FK1" FromRole="Tables" ToRole="Serveur" />
+          <NavigationProperty Name="TotalCommandes" Relationship="Self.fk4" FromRole="Tables" ToRole="TotalCommandes" />
+        </EntityType>
+        <EntityType Name="TotalCommandes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Num_commande" Type="Int32" />
+          <Property Name="Jours" Type="DateTime" Precision="0" />
+          <Property Name="Num_table" Type="Int32" />
+          <Property Name="Prix" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="id_serveur" Type="Int32" />
+          <Property Name="gain_serveur" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Serveur" Relationship="Self.fk5" FromRole="TotalCommandes" ToRole="Serveur" />
+          <NavigationProperty Name="Tables" Relationship="Self.fk4" FromRole="TotalCommandes" ToRole="Tables" />
+        </EntityType>
+        <Association Name="fk2">
+          <End Role="Plats" Type="Self.Plats" Multiplicity="0..1" />
+          <End Role="Commandes" Type="Self.Commandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plats">
+              <PropertyRef Name="Idplat" />
+            </Principal>
+            <Dependent Role="Commandes">
+              <PropertyRef Name="Idplat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk3">
+          <End Role="Tables" Type="Self.Tables" Multiplicity="0..1" />
+          <End Role="Commandes" Type="Self.Commandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tables">
+              <PropertyRef Name="Id_table" />
+            </Principal>
+            <Dependent Role="Commandes">
+              <PropertyRef Name="Id_table" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK1">
+          <End Role="Serveur" Type="Self.Serveur" Multiplicity="0..1" />
+          <End Role="Tables" Type="Self.Tables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serveur">
+              <PropertyRef Name="id_serveur" />
+            </Principal>
+            <Dependent Role="Tables">
+              <PropertyRef Name="id_serveur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk5">
+          <End Role="Serveur" Type="Self.Serveur" Multiplicity="0..1" />
+          <End Role="TotalCommandes" Type="Self.TotalCommandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serveur">
+              <PropertyRef Name="id_serveur" />
+            </Principal>
+            <Dependent Role="TotalCommandes">
+              <PropertyRef Name="id_serveur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk4">
+          <End Role="Tables" Type="Self.Tables" Multiplicity="0..1" />
+          <End Role="TotalCommandes" Type="Self.TotalCommandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tables">
+              <PropertyRef Name="Id_table" />
+            </Principal>
+            <Dependent Role="TotalCommandes">
+              <PropertyRef Name="Num_table" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="restaurant_projectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Commandes" EntityType="Self.Commandes" />
+          <EntitySet Name="Plats" EntityType="Self.Plats" />
+          <EntitySet Name="Serveur" EntityType="Self.Serveur" />
+          <EntitySet Name="Tables" EntityType="Self.Tables" />
+          <EntitySet Name="TotalCommandes" EntityType="Self.TotalCommandes" />
+          <AssociationSet Name="fk2" Association="Self.fk2">
+            <End Role="Plats" EntitySet="Plats" />
+            <End Role="Commandes" EntitySet="Commandes" />
+          </AssociationSet>
+          <AssociationSet Name="fk3" Association="Self.fk3">
+            <End Role="Tables" EntitySet="Tables" />
+            <End Role="Commandes" EntitySet="Commandes" />
+          </AssociationSet>
+          <AssociationSet Name="FK1" Association="Self.FK1">
+            <End Role="Serveur" EntitySet="Serveur" />
+            <End Role="Tables" EntitySet="Tables" />
+          </AssociationSet>
+          <AssociationSet Name="fk5" Association="Self.fk5">
+            <End Role="Serveur" EntitySet="Serveur" />
+            <End Role="TotalCommandes" EntitySet="TotalCommandes" />
+          </AssociationSet>
+          <AssociationSet Name="fk4" Association="Self.fk4">
+            <End Role="Tables" EntitySet="Tables" />
+            <End Role="TotalCommandes" EntitySet="TotalCommandes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="restaurant_projectModelStoreContainer" CdmEntityContainer="restaurant_projectEntities">
+          <EntitySetMapping Name="Commandes">
+            <EntityTypeMapping TypeName="restaurant_projectModel.Commandes">
+              <MappingFragment StoreEntitySet="Commandes">
+                <ScalarProperty Name="id_commande" ColumnName="id_commande" />
+                <ScalarProperty Name="Idplat" ColumnName="Idplat" />
+                <ScalarProperty Name="QTT" ColumnName="QTT" />
+                <ScalarProperty Name="etat_plat" ColumnName="etat_plat" />
+                <ScalarProperty Name="etat_comm" ColumnName="etat_comm" />
+                <ScalarProperty Name="Id_table" ColumnName="Id_table" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plats">
+            <EntityTypeMapping TypeName="restaurant_projectModel.Plats">
+              <MappingFragment StoreEntitySet="Plats">
+                <ScalarProperty Name="Idplat" ColumnName="Idplat" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+                <ScalarProperty Name="Prix" ColumnName="Prix" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Serveur">
+            <EntityTypeMapping TypeName="restaurant_projectModel.Serveur">
+              <MappingFragment StoreEntitySet="Serveur">
+                <ScalarProperty Name="id_serveur" ColumnName="id_serveur" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tables">
+            <EntityTypeMapping TypeName="restaurant_projectModel.Tables">
+              <MappingFragment StoreEntitySet="Tables">
+                <ScalarProperty Name="Id_table" ColumnName="Id_table" />
+                <ScalarProperty Name="Etat_table" ColumnName="Etat_table" />
+                <ScalarProperty Name="Etat_commande" ColumnName="Etat_commande" />
+                <ScalarProperty Name="id_serveur" ColumnName="id_serveur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TotalCommandes">
+            <EntityTypeMapping TypeName="restaurant_projectModel.TotalCommandes">
+              <MappingFragment StoreEntitySet="TotalCommandes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Num_commande" ColumnName="Num_commande" />
+                <ScalarProperty Name="Jours" ColumnName="Jours" />
+                <ScalarProperty Name="Num_table" ColumnName="Num_table" />
+                <ScalarProperty Name="Prix" ColumnName="Prix" />
+                <ScalarProperty Name="id_serveur" ColumnName="id_serveur" />
+                <ScalarProperty Name="gain_serveur" ColumnName="gain_serveur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,64 @@
+﻿@model RestaurantProject.Tables
+
+@{
+    ViewBag.Title = "Login";
+}
+
+
+
+
+<html>
+<head>
+    <style type="text/css">
+        body {
+            margin: auto;
+            text-align: center;
+            width: 75%;
+        }
+        section,#create {
+            width:500px;
+            margin:auto;
+            margin-left:500px;
+            background-color:blanchedalmond;
+            border: 2px groove black;
+            padding: 10px 10px 10px 10px;
+        
+          }
+    </style>
+</head>
+<body background="~/Content/Images/restau.jpg">
+    <h2 id="create">Welcome dear client !<br></br> Please enter your table number</h2>
+    <section>
+        @using (Html.BeginForm("Login", "Commande", FormMethod.Post))
+        {
+            //this is for creaing a form tag
+            @Html.AntiForgeryToken() //this is for preventing CSRF attack
+                                    @Html.ValidationSummary(true)
+            if (@ViewBag.Message != null)
+            {
+                <div style="border:1px solid red">
+                    @ViewBag.Message
+                </div>
+            }
+            <table align="center">
+                <tr>
+                    <td>@Html.LabelFor(a => a.Id_table)</td>
+                    <td>@Html.TextBoxFor(a => a.Id_table)</td>
+                    <td>@Html.ValidationMessageFor(a => a.Id_table)</td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Login" />
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        }
+        
+    </section>
+    
+    <h4 id="create">To test enter a number from 1 to 10</h4>
+</body>
+</html>

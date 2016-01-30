@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "PayerCommande";
+}
+
+
+
+<html>
+<head>
+    <link href="~/Content/StyleSheet1.css" rel='stylesheet' type='text/css' />
+</head>
+<body background="~/Content/Images/restau.jpg">
+    <h2 id="create">PayerCommande</h2>
+
+    <section>
+
+        <p>
+            <label>Votre total est :</label>@Session["Total_Prix"]
+        </p>
+        <form method="post" action="PayementAndTips">
+            <p>
+                Pour boire :<br />
+                <input type="radio" name="tips" value="10" id="_10" checked /> <label for="_10">10%</label><br />
+                <input type="radio" name="tips" value="20" id="_20" /> <label for="_20">20%</label><br />
+                <label for="personaliser">pourcentage personaliser</label> <input type="text" name="tips" id="personaliser" /> <br />
+            </p>
+            <p><input type="submit" value="valider" name="valider" /></p>
+        </form>
+    </section>
+</body>
+</html>

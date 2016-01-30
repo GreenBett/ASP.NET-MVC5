@@ -1,0 +1,65 @@
+﻿@model RestaurantProject.Commandes
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<html>
+<head>
+    <link href="~/Content/StyleSheet1.css" rel='stylesheet' type='text/css' />
+</head>
+<body background="~/Content/Images/restau.jpg">
+    <h2 id="create">Details</h2>
+
+    <section>
+        <div>
+            <h4>Commandes</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.QTT)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.QTT)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.etat_plat)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.etat_plat)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.etat_comm)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.etat_comm)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Plats.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Plats.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Id_table)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Id_table)
+                </dd>
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.id_commande }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </section>
+</body>
+</html>

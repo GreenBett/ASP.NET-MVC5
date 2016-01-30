@@ -1,0 +1,49 @@
+﻿ #t {
+            text-align:center;
+        }
+
+  body {
+
+        margin: auto;
+        text-align: center;
+        width: 75%;
+    }
+        body,div {
+            margin: auto;
+            text-align: center;
+            width: 75%;
+        }
+    section,#create {
+            width:500px;
+            margin:auto;
+            margin-left:500px;
+            background-color:blanchedalmond;
+            border: 2px groove black;
+            padding: 10px 10px 10px 10px;
+        
+          }
+        table {
+            
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 700px;
+            min-width: 400px;
+            text-align: center;
+        }
+
+        caption {
+            caption-side: bottom;
+            font-weight: bold;
+            font-style: italic;
+            margin: 4px;
+        }
+
+        table, th, td {
+            border: 1px solid gray;
+        }
+
+        th, td {
+            height: 24px;
+            padding: 4px;
+            vertical-align: middle;
+        }

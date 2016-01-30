@@ -1,0 +1,66 @@
+﻿@model IEnumerable<RestaurantProject.Commandes>
+
+@{
+    ViewBag.Title = "Index";
+}
+<html>
+<head>
+    <link href="~/Content/StyleSheet1.css" rel='stylesheet' type='text/css' />
+</head>
+<body background="~/Content/Images/restau.jpg">
+    <h2 id="create">Viewing the list of commands</h2>
+
+    <section>
+
+
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.QTT)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.etat_plat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.etat_comm)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Plats.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tables.Id_table)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QTT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.etat_plat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.etat_comm)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Plats.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tables.Id_table)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.id_commande }) |
+
+                        @Html.ActionLink("Details", "Details", new { id = item.id_commande })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </section>
+</body>
+</html>

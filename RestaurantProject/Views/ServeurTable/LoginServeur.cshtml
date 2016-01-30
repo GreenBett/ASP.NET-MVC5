@@ -1,0 +1,70 @@
+﻿@model RestaurantProject.Serveur
+
+@{
+    ViewBag.Title = "LoginServeur";
+}
+
+<h2>LoginServeur</h2>
+
+<html>
+<head>
+    <style type="text/css">
+        body {
+            margin: auto;
+            text-align: center;
+            width: 75%;
+        }
+
+        section, #create {
+            width: 500px;
+            margin: auto;
+            margin-left: 500px;
+            background-color: blanchedalmond;
+            border: 2px groove black;
+            padding: 10px 10px 10px 10px;
+        }
+    </style>
+</head>
+<body background="~/Content/Images/restau.jpg">
+    <h2 id="create">Login</h2>
+    <section>
+
+        @using (Html.BeginForm("LoginServeur", "ServeurTable", FormMethod.Post))
+        {
+            //this is for creaing a form tag
+            @Html.AntiForgeryToken() //this is for preventing CSRF attack
+                                @Html.ValidationSummary(true)
+            if (@ViewBag.Message != null)
+            {
+                <div style="border:1px solid red">
+                    @ViewBag.Message
+                </div>
+            }
+            <table align="center">
+                <tr>
+                    <td>@Html.LabelFor(a => a.login)</td>
+                    <td>@Html.TextBoxFor(a => a.login)</td>
+                    <td>@Html.ValidationMessageFor(a => a.login)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(a => a.password)</td>
+                    <td>@Html.TextBoxFor(a => a.password)</td>
+                    <td>@Html.ValidationMessageFor(a => a.password)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Login" />
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        }
+      
+       
+    </section>
+    <h4 id="create">To test use Login=majdouline and pass=123</h4>
+   
+    <h4 id="create">Or use Login=chaimae and pass=123</h4>
+</body>
+</html>

@@ -1,0 +1,99 @@
+﻿@model RestaurantProject.Commandes
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<html>
+<head>
+    <link href="~/Content/StyleSheet1.css" rel='stylesheet' type='text/css' />
+</head>
+<body background="~/Content/Images/restau.jpg">
+    <h2 id="create">Create you're commande</h2>
+
+    <section>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Commandes</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Idplat, "Idplat", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Idplat, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Idplat, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.QTT, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.QTT, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.QTT, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+
+
+
+
+
+
+        <table align="center" background="~/Content/Images/menu.jpeg">
+            <tr id="t">
+                <td><h4>IdPlat</h4></td>
+                <td><h4>Name Plat</h4></td>
+                <td><h4>Prix</h4></td>
+            </tr>
+
+            @{
+
+
+
+                using (restaurant_projectEntities dc = new restaurant_projectEntities())
+                {
+
+
+                    var v = dc.Plats.AsEnumerable();
+                    if (v != null)
+                    {
+                        foreach (var i in v)
+                        {
+                            {
+                                <tr>
+                                    <td align="center"><h4>@i.Idplat</h4></td>
+                                    <td align="center"><h4>@i.Name</h4></td>
+                                    <td align="center"><h4>@i.Prix</h4></td>
+
+                                </tr>
+                            }
+
+
+                        }
+                    }
+                }
+
+            }
+        </table>
+
+    </section>
+</body>
+</html>
